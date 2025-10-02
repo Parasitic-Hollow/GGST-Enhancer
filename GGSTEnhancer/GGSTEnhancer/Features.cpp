@@ -204,9 +204,10 @@ bool ColorUnlocker()
 	if (!IsSelectableCharaColorID) return false;
 	Detour64((BYTE*)IsSelectableCharaColorID, (BYTE*)hk_ColorCheck, 15);
 
+	//40 53 48 83 EC ? 48 8B D9 0F 29 74 24 30 48 8B 89 C0 08 00 00
 	//AREDGameState::UpdateChangeScene()
-	//48 89 4C 24 08 55 53 56 57 41 54 41 56 41 57 48 8D 6C 24 D9 48 81 EC ? ? ? ? 80 3D ? ? ? ? ?
-	void* bArcadeEnemyOrbSurvivalEnemy = PatternScan("0F 85 ? ? ? ? 84 D2 0F 84 ? ? ? ? 84 C0");
+	//48 89 4C 24 08 55 53 56 57 41 55 41 56 41 57 48 8B EC 48 83 EC ? 4C 8B F9 E8 ? ? ? ? 84 C0
+	void* bArcadeEnemyOrbSurvivalEnemy = PatternScan("0F 85 ? ? ? ? 40 84 FF 0F 85 ? ? ? ? 45 84 F6");
 	if (!bArcadeEnemyOrbSurvivalEnemy) return false;
 
 	BYTE bArcadeEnemyOrbSurvivalEnemyPatch[] = { 0xE9, 0xCE, 0x01, 0x00, 0x00, 0x90 }; //jmp 0x1d3 (nop)
