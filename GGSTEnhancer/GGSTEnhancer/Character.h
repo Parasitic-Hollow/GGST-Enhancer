@@ -29,3 +29,5 @@
 #define SLAYER 27
 #define DIZZY 28
 #define VENOM 29
+#define UNIKA 30
+#define LUCY 31

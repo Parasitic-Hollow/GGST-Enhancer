@@ -86,7 +86,7 @@ bool UnlockRewards()
 	if (!Orig_UpdateOnlineCheatPt) return false;
 
 	Detour64(Orig_CheckRewardAura, (BYTE*)hk_CheckRewardAura, 12);
-	
+
 	return true;
 }
 
@@ -210,7 +210,7 @@ bool ColorUnlocker()
 	void* bArcadeEnemyOrbSurvivalEnemy = PatternScan("0F 85 ? ? ? ? 40 84 FF 0F 85 ? ? ? ? 45 84 F6");
 	if (!bArcadeEnemyOrbSurvivalEnemy) return false;
 
-	BYTE bArcadeEnemyOrbSurvivalEnemyPatch[] = { 0xE9, 0xCE, 0x01, 0x00, 0x00, 0x90 }; //jmp 0x1d3 (nop)
+	BYTE bArcadeEnemyOrbSurvivalEnemyPatch[] = { 0xE9, 0xF8, 0x00, 0x00, 0x00, 0x90 }; //jmp 0xFD (nop)
 
 	Patch(bArcadeEnemyOrbSurvivalEnemyPatch, (BYTE*)bArcadeEnemyOrbSurvivalEnemy, sizeof(bArcadeEnemyOrbSurvivalEnemy));
 
@@ -355,7 +355,9 @@ char __fastcall hk_ColorCheck(unsigned int charaID, unsigned int colorID)
 	return	(colorID >= COLORMIN && colorID <= COLORLIMIT) || colorID == SPCOLOR ||
 		(charaID == BAIKEN && colorID == ALTCOLOR) ||
 		((charaID == SOL || charaID == KY || charaID == INO || charaID == BAIKEN) && colorID == EXCOLOR) ||
-		((charaID == NAGO || charaID == INO || charaID == JACKO || charaID == ASUKA) && colorID == STORYCOLOR)
+		(((charaID == NAGO || charaID == INO || charaID == JACKO || charaID == ASUKA) && colorID == STORYCOLOR)) ||
+		(((charaID == SOL || charaID == KY || charaID == AXL || charaID == SIN || charaID == UNIKA || charaID == HC ||
+			charaID == BRIDGET || charaID == RAM || charaID == ELPHELT || charaID == ABA || charaID == MAY) && colorID == COLLABCOLOR))
 		;
 }
 
