@@ -5,6 +5,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <chrono>
+#include <thread>
 
 void PatchAll()
 {
@@ -75,39 +77,67 @@ void PatchAll()
 		ConfigFile.close();
 	}
 
+	int ErrorAt = 0;
+
+	std::chrono::seconds Timeout(5);
+	std::this_thread::sleep_for(Timeout);
+
 	std::cout << "[+] Uncensoring Museum" << std::endl;
-	while (!UncensorMuseum()) {};
+	while (ErrorAt = UncensorMuseum()) {
+		std::cout << "[-] Uncensoring Museum Error @: " << ErrorAt << "\n";
+		std::this_thread::sleep_for(Timeout);
+	};
 	std::cout << "[+] Success!" << std::endl;
 
 	std::cout << "[+] Improving Fishing" << std::endl;
-	while (!ImproveFishing()) {};
+	while (ErrorAt = ImproveFishing()) {
+		std::cout << "[-] Improving Fishing Error @: " << ErrorAt << "\n";
+		std::this_thread::sleep_for(Timeout);
+	};
 	std::cout << "[+] Success!" << std::endl;
 
 	std::cout << "[+] Unlocking Rewards" << std::endl;
-	while (!UnlockRewards()) {};
+	while (ErrorAt = UnlockRewards()) {
+		std::cout << "[-] Unlocking Rewards Error @: " << ErrorAt << "\n";
+		std::this_thread::sleep_for(Timeout);
+	};
 	std::cout << "[+] Success!" << std::endl;
 
 	std::cout << "[+] Custom Avatar Image" << std::endl;
-	while (!CustomAvatarImage()) {};
+	while (ErrorAt = CustomAvatarImage()) {
+		std::cout << "[-] Custom Avatar Image Error @: " << ErrorAt << "\n";
+		std::this_thread::sleep_for(Timeout);
+	};
 	std::cout << "[+] Success!" << std::endl;
 
 	std::cout << "[+] Anti PNG Bomb" << std::endl;
-	while (!AntiPNGBomb()) {};
+	while (ErrorAt = AntiPNGBomb()) {
+		std::cout << "[-] Anti PNG Bomb Error @: " << ErrorAt << "\n";
+		std::this_thread::sleep_for(Timeout);
+	};
 	std::cout << "[+] Success!" << std::endl;
 
 	std::cout << "[+] Custom Thumbnail" << std::endl;
-	while (!CustomThumbnail()) {};
+	while (ErrorAt = CustomThumbnail()) {
+		std::cout << "[-] Custom Thumbnail Error @: " << ErrorAt << "\n";
+		std::this_thread::sleep_for(Timeout);
+	};
 	std::cout << "[+] Success!" << std::endl;
 
-	/*
+#ifdef _DEBUG
 	std::cout << "[+] DLC Unlocker" << std::endl;
 	while (!DLCUnlocker()) {};
 	std::cout << "[+] Success!" << std::endl;
-	*/
+#endif
 
 	std::cout << "[+] Color Unlocker" << std::endl;
-	while (!ColorUnlocker()) {};
+	while (ErrorAt = ColorUnlocker()) {
+		std::cout << "[-] Color Unlocker Error @: " << ErrorAt << "\n";
+		std::this_thread::sleep_for(Timeout);
+	};
 	std::cout << "[+] Success!" << std::endl;
+
+	DONE:
 
 	std::cout << "[+] Done!" << std::endl;
 

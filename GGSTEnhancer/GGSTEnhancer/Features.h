@@ -25,15 +25,17 @@ inline const unsigned int MAX_TEXTURE_AXIS_DIMENSION = 4096;
 inline __int64 OriginalThumbnail = 0;
 inline void* ThumbnailAlloc = nullptr;
 
-bool UncensorMuseum();
-bool ImproveFishing();
-bool UnlockRewards();
-bool CustomAvatarImage();
-bool CustomThumbnail();
+int UncensorMuseum();
+int ImproveFishing();
+int UnlockRewards();
+int CustomAvatarImage();
+int CustomThumbnail();
 bool ReplaceAvatarImage();
-bool AntiPNGBomb();
-//bool DLCUnlocker();
-bool ColorUnlocker();
+int AntiPNGBomb();
+#ifdef _DEBUG
+int DLCUnlocker();
+#endif
+int ColorUnlocker();
 
 inline bool bGetRewardAuras = false;
 inline unsigned int SelectedRewardAvatarAura = 0;
@@ -43,47 +45,52 @@ inline bool bAntiPNGBomb = false;
 
 inline __int64 CSaveDataManagerInstance = 0;
 
-typedef __int64(__fastcall* Free_t)(__int64 Object);
+using Free_t = __int64(__fastcall*)(__int64 Object);
 inline Free_t Orig_Free;
 
-typedef void(__fastcall* AddInGameCash_t)(__int64 CSaveDataManager, int add);
+using AddInGameCash_t = void(__fastcall*)(__int64 CSaveDataManager, int add);
 inline AddInGameCash_t Orig_AddInGameCash;
 void __fastcall hk_AddInGameCash(__int64 CSaveDataManager, int add);
 
-typedef void(__fastcall* SetRewardAvatarAura_t)(__int64 UREDPlayerData, int itemID);
+using SetRewardAvatarAura_t = void(__fastcall*)(__int64 UREDPlayerData, int itemID);
 inline SetRewardAvatarAura_t Orig_SetRewardAvatarAura;
 
-typedef void(__fastcall* SetRewardNameAura_t)(__int64 UREDPlayerData, int itemID);
+using SetRewardNameAura_t = void(__fastcall*)(__int64 UREDPlayerData, int itemID);
 inline SetRewardNameAura_t Orig_SetRewardNameAura;
 
-typedef __int64(__fastcall* SetRewardBadge_t)(__int64 UREDPlayerData, __int64 badgeID, unsigned int add);
+using SetRewardBadge_t = __int64(__fastcall*)(__int64 UREDPlayerData, __int64 badgeID, unsigned int add);
 inline SetRewardBadge_t Orig_SetRewardBadge;
 
 __int64 __fastcall hk_CheckRewardAura(__int64 UREDPlayerData);
 
-typedef void(__fastcall* UpdateOnlineCheatPt_t)(__int64, char);
+using UpdateOnlineCheatPt_t = void(__fastcall*)(__int64, char);
 inline UpdateOnlineCheatPt_t Orig_UpdateOnlineCheatPt;
 void __fastcall hk_UpdateOnlineCheatPt(__int64 UREDPlayerData, char isMatchEnd);
 
-typedef __int64(__fastcall* SetToDefault_All_t)(__int64 CSaveDataManager);
+using SetToDefault_All_t = __int64(__fastcall*)(__int64 CSaveDataManager);
 inline SetToDefault_All_t Orig_SetToDefault_All;
 __int64 __fastcall hk_SetToDefault_All(__int64 CSaveDataManager);
 
-typedef __int64(__fastcall* ExportAvatarImage_t)(__int64 UREDWidgetLobbyAvatarEditor);
+using ExportAvatarImage_t = __int64(__fastcall*)(__int64 UREDWidgetLobbyAvatarEditor);
 inline ExportAvatarImage_t Orig_ExportAvatarImage;
 __int64 __fastcall hk_ExportAvatarImage(__int64 UREDWidgetLobbyAvatarEditor);
 
-typedef __int64(__fastcall* CreateTransient_t)(int InSizeX, int inSizeY, __int64 InFormat, __int64 InName);
+using CreateTransient_t = __int64(__fastcall*)(int InSizeX, int inSizeY, __int64 InFormat, __int64 InName);
 inline CreateTransient_t Orig_CreateTransient;
 __int64 __fastcall hk_CreateTransient(int InSizeX, int InSizeY, __int64 InFormat, __int64 InName);
 
-typedef __int64(__fastcall* GenerateThumbnail_t)(__int64 Instance);
+using GenerateThumbnail_t = __int64(__fastcall*)(__int64 Instance);
 inline GenerateThumbnail_t Orig_GenerateThumbnail;
 __int64 __fastcall hk_GenerateThumbnail(__int64 Instance);
 
-typedef __int64(__fastcall* FigureCleanup_t)(__int64 Instance, char a2);
+using FigureCleanup_t = __int64(__fastcall*)(__int64 Instance, char a2);
 inline FigureCleanup_t Orig_FigureCleanup;
 __int64 __fastcall hk_FigureCleanup(__int64 Instance, char a2);
 
-char __fastcall hk_ColorCheck(unsigned int charaID, unsigned int colorID);
-//__int64 __fastcall hk_IsUnlocked(const wchar_t* pDLCName);
+using IsSelectableCharaColorID_t = char(__fastcall*)(unsigned int charaID, unsigned int colorID);
+inline IsSelectableCharaColorID_t Orig_IsSelectableCharaColorID;
+char __fastcall hk_IsSelectableCharaColorID(unsigned int charaID, unsigned int colorID);
+
+#ifdef _DEBUG
+__int64 __fastcall hk_IsUnlocked(const wchar_t* pDLCName);
+#endif

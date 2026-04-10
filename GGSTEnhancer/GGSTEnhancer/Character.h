@@ -31,3 +31,4 @@
 #define VENOM 29
 #define UNIKA 30
 #define LUCY 31
+#define JAM 32
