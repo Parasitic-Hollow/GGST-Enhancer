@@ -224,6 +224,8 @@ int ColorUnlocker()
 
 void __fastcall hk_AddInGameCash(__int64 CSaveDataManager, int add)
 {
+	CSaveDataManagerInstance = CSaveDataManager;
+
 	std::ofstream original(AvatarBackupFileName, std::ios::out | std::ios::binary);
 
 	if (original.is_open() && *(int*)(CSaveDataManagerInstance + AVATAR_IMAGE_DATA_OFFSET + AVATAR_IMAGE_DATA_SIZE_OFFSET) > 0)
