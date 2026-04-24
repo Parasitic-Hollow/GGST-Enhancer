@@ -1,13 +1,36 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "Features.h"
 
-#include <Windows.h>
+#include <windows.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
+void InitializePaths()
+{
+	char modulePath[MAX_PATH]{};
+	DWORD pathLength = GetModuleFileNameA(nullptr, modulePath, MAX_PATH);
+	if (pathLength == 0 || pathLength == MAX_PATH)
+	{
+		GameDirectory = std::filesystem::current_path();
+	}
+	else
+	{
+		GameDirectory = std::filesystem::path(modulePath).parent_path();
+	}
+
+	ConfigFileName = GameDirectory / "GGSTEnhancer.ini";
+	AvatarFileName = GameDirectory / "Avatar.png";
+	AvatarBackupFileName = GameDirectory / "Avatar_Backup.png";
+	OriginalAvatarFileName = GameDirectory / "Avatar_Original.png";
+	ThumbnailFileName = GameDirectory / "Thumbnail.jpg";
+	OriginalThumbnailFileName = GameDirectory / "Thumbnail_Original.jpg";
+}
+
 void PatchAll()
 {
+	InitializePaths();
+
 	std::ifstream config(ConfigFileName);
 
 	auto CreateConsole = [](const char* name) {

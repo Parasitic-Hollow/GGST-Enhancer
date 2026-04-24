@@ -1,11 +1,16 @@
 #pragma once
 
-inline const char ConfigFileName[] = ".\\RED\\Binaries\\Win64\\GGSTEnhancer.ini";
-inline const char AvatarFileName[] = ".\\Avatar.png"; //Context changed
-inline const char AvatarBackupFileName[] = ".\\Avatar_Backup.png"; //Context changed
-inline const char OriginalAvatarFileName[] = ".\\Avatar_Original.png"; //Context changed
-inline const char ThumbnailFileName[] = ".\\Thumbnail.jpg"; //Context changed
-inline const char OriginalThumbnailFileName[] = ".\\Thumbnail_Original.jpg"; //Context changed
+#include <filesystem>
+
+inline std::filesystem::path GameDirectory;
+inline std::filesystem::path ConfigFileName;
+inline std::filesystem::path AvatarFileName;
+inline std::filesystem::path AvatarBackupFileName;
+inline std::filesystem::path OriginalAvatarFileName;
+inline std::filesystem::path ThumbnailFileName;
+inline std::filesystem::path OriginalThumbnailFileName;
+
+void InitializePaths();
 
 //40 55 48 8D 6C 24 A9 48 81 EC ? ? ? ? 48 8B 01
 

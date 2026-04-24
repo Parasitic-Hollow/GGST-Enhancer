@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Windows.h>
+#include <windows.h>
 #include <basetsd.h>
 #include <minwindef.h>
 #include <memoryapi.h>
