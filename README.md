@@ -17,7 +17,7 @@ Linux:
 
 1. Download x64 `winmm.dll` from [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases).
 
-2. Build this project or download a [built copy of the mod](https://github.com/HAWGT/GGST-Enhancer/releases).
+2. Build this project or download a [built copy of the mod](https://github.com/Parasitic-Hollow/GGST-Enhancer/releases).
 
 3. If you built the project yourself, rename `build/UMPDC.dll` to `GGSTEnhancer.asi`.
 
