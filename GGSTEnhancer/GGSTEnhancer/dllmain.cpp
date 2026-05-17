@@ -98,57 +98,42 @@ void PatchAll()
 		ConfigFile.close();
 	}
 
-	int ErrorAt = 0;
+	auto RunFeature = [](const char* name, int (*feature)()) {
+		std::cout << "[+] " << name << std::endl;
 
-	std::cout << "[+] Uncensoring Museum" << std::endl;
-	while (ErrorAt = UncensorMuseum()) {
-		std::cout << "[-] Uncensoring Museum Error @: " << ErrorAt << " - retrying...\n";
-	};
-	std::cout << "[+] Success!" << std::endl;
+		int ErrorAt = 0;
+		for (int attempt = 1; attempt <= 300; ++attempt)
+		{
+			ErrorAt = feature();
+			if (ErrorAt == 0)
+			{
+				std::cout << "[+] " << name << " Success!" << std::endl;
+				return true;
+			}
 
-	std::cout << "[+] Improving Fishing" << std::endl;
-	while (ErrorAt = ImproveFishing()) {
-		std::cout << "[-] Improving Fishing Error @: " << ErrorAt << " - retrying...\n";
-	};
-	std::cout << "[+] Success!" << std::endl;
+			if (attempt == 1 || attempt % 50 == 0)
+			{
+				std::cout << "[-] " << name << " Error @: " << ErrorAt << " - retrying..." << std::endl;
+			}
 
-	std::cout << "[+] Unlocking Rewards" << std::endl;
-	while (ErrorAt = UnlockRewards()) {
-		std::cout << "[-] Unlocking Rewards Error @: " << ErrorAt << " - retrying...\n";;
-	};
-	std::cout << "[+] Success!" << std::endl;
+			Sleep(100);
+		}
 
-	std::cout << "[+] Custom Avatar Image" << std::endl;
-	while (ErrorAt = CustomAvatarImage()) {
-		std::cout << "[-] Custom Avatar Image Error @: " << ErrorAt << " - retrying...\n";
+		std::cout << "[!] " << name << " failed; continuing so other features can still load." << std::endl;
+		return false;
 	};
-	std::cout << "[+] Success!" << std::endl;
 
-	std::cout << "[+] Anti PNG Bomb" << std::endl;
-	while (ErrorAt = AntiPNGBomb()) {
-		std::cout << "[-] Anti PNG Bomb Error @: " << ErrorAt << " - retrying...\n";
-	};
-	std::cout << "[+] Success!" << std::endl;
-
-	std::cout << "[+] Custom Thumbnail" << std::endl;
-	while (ErrorAt = CustomThumbnail()) {
-		std::cout << "[-] Custom Thumbnail Error @: " << ErrorAt << " - retrying...\n";
-	};
-	std::cout << "[+] Success!" << std::endl;
+	RunFeature("Color Unlocker", ColorUnlocker);
+	RunFeature("Uncensoring Museum", UncensorMuseum);
+	RunFeature("Improving Fishing", ImproveFishing);
+	RunFeature("Unlocking Rewards", UnlockRewards);
+	RunFeature("Custom Avatar Image", CustomAvatarImage);
+	RunFeature("Anti PNG Bomb", AntiPNGBomb);
+	RunFeature("Custom Thumbnail", CustomThumbnail);
 
 #ifdef _DEBUG
-	std::cout << "[+] DLC Unlocker" << std::endl;
-	while (ErrorAt = DLCUnlocker()) {
-		std::cout << "[-] DLC Unlocker Error @: " << ErrorAt << " - retrying...\n";
-	};
-	std::cout << "[+] Success!" << std::endl;
+	RunFeature("DLC Unlocker", DLCUnlocker);
 #endif
-
-	std::cout << "[+] Color Unlocker" << std::endl;
-	while (ErrorAt = ColorUnlocker()) {
-		std::cout << "[-] Color Unlocker Error @: " << ErrorAt << " - retrying...\n";
-	};
-	std::cout << "[+] Success!" << std::endl;
 
 	DONE:
 
